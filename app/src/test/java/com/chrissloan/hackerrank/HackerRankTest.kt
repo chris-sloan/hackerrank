@@ -1,6 +1,5 @@
 package com.chrissloan.hackerrank
 
-import org.junit.Assert.assertThat
 import org.junit.Test
 import kotlin.math.abs
 
@@ -52,10 +51,6 @@ class HackerRankTest {
     }
 
     private val arr: Array<Int> = arrayOf(3, 4, 5, 0, 0, -1)
-    private val expectedPos = "0.500000"
-    private val expectedZero = "0.333333"
-    private val expectedNeg = "0.166667"
-
     /**
      * Given an array of integers, calculate the fractions of its elements that are positive,
      * negative, and are zeros. Print the decimal value of each fraction on a new line.
@@ -75,21 +70,9 @@ class HackerRankTest {
             }
         }
 
-        val posValue = pos.toFloat() / size
-        val negValue = neg.toFloat() / size
-        val zeroValue = zero.toFloat() / size
-
-        val actualPos = "%.6f".format(posValue)
-        val actualNeg = "%.6f".format(negValue)
-        val actualZero = "%.6f".format(zeroValue)
-
         println("%.6f".format(pos.toFloat() / size))
         println("%.6f".format(neg.toFloat() / size))
         println("%.6f".format(zero.toFloat() / size))
-
-        assert(actualPos == expectedPos)
-        assert(actualNeg == expectedNeg)
-        assert(actualZero == expectedZero)
     }
 
     @Test
@@ -113,9 +96,79 @@ class HackerRankTest {
     fun staircase() {
         val n = 34
         for (i in 1..n) { //lines
-            var line = " ".repeat(n-i)
+            var line = " ".repeat(n - i)
             line += "#".repeat(i)
             println(line)
         }
+    }
+
+    /**
+     * Given five positive integers, find the minimum and maximum values that can be calculated by
+     * summing exactly four of the five integers. Then print the respective minimum and maximum
+     * values as a single line of two space-separated long integers.
+     *
+     */
+    @Test
+    fun minMaxSum() {
+        val arr = arrayOf(426980153, 354802167, 142980735, 968217435, 734892650)
+        arr.sort()
+        val longArr = arr.map { it.toLong() }
+
+        val min: Long = longArr.take(4).sum()
+        val max: Long = longArr.takeLast(4).sum()
+
+        println("$min $max")
+    }
+
+    /**
+     * You are in charge of the cake for your niece's birthday and have decided the cake will have
+     * one candle for each year of her total age. When she blows out the candles, she’ll only be
+     * able to blow out the tallest ones. Your task is to find out how many candles she can
+     * successfully blow out.
+     *
+     * For example, if your niece is turning 4 years old, and the cake will have candles of height
+     * 4, 4, 1, 3 she will be able to blow out 2 candles successfully, since the tallest candles
+     * are of height and there are such candles.
+     */
+    @Test
+    fun birthdayCakeCandles() {
+        val ar = arrayOf(7, 7, 8, 8, 6, 5, 4, 3, 6, 7, 8, 8, 8)
+
+        val max = ar.max()
+        val grouped = ar.groupBy { it }
+        val countOfMax = grouped[max]!!.size
+
+        println(countOfMax)
+    }
+
+    /**
+     * Given a time in 12-hour AM/PM format, convert it to military (24-hour) time.
+     * Note: Midnight is 12:00:00AM on a 12-hour clock, and 00:00:00 on a 24-hour clock. Noon is
+     * 12:00:00PM on a 12-hour clock, and 12:00:00 on a 24-hour clock.
+     */
+    @Test
+    fun timeConversion() {
+        val s = "12:45:00PM"
+        lateinit var retVal: String
+        val isPm = s.contains("PM")
+        val split = s
+            .replace("PM", "", true)
+            .replace("AM", "", true)
+            .split(":")
+            .map { it.toInt() }
+            .toMutableList()
+
+        if (isPm && split[0] != 12 || !isPm && split[0] == 12) {
+            split[0] += 12
+        }
+        if (split[0] == 24) {
+            split[0] = 0
+        }
+        val hours = split[0].toString().padStart(2, '0')
+        val mins = split[1].toString().padStart(2, '0')
+        val secs = split[2].toString().padStart(2, '0')
+
+        retVal = "$hours:$mins:$secs"
+        println(retVal)
     }
 }
