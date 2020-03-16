@@ -171,4 +171,65 @@ class HackerRankTest {
         retVal = "$hours:$mins:$secs"
         println(retVal)
     }
+
+
+    /**
+     * https://www.hackerrank.com/challenges/apple-and-orange/problem
+     *
+     * countApplesAndOranges has the following parameter(s):
+     * s: integer, starting point of Sam's house location.
+     * t: integer, ending location of Sam's house location.
+     * a: integer, location of the Apple tree.
+     * b: integer, location of the Orange tree.
+     * apples: integer array, distances at which each apple falls from the tree.
+     * oranges: integer array, distances at which each orange falls from the tree.
+     */
+
+    @Test
+    fun appleAndOrangeProblem() {
+        val a: Int  = 5//location of apple tree
+        val s: Int  = 7// beginning of house
+        val t: Int  = 11// end of house
+        val b: Int  = 15// location of orange tree
+        val apples: Array<Int>  = arrayOf(-2, 2, 1)// final locations of apples from the tree
+        val oranges: Array<Int> = arrayOf(5, -6)// final locations of oranges from the tree
+
+        val output: Array<Int> = arrayOf(0,0) // [0] : apples, [1]: oranges numbers that hit the house
+
+        apples.forEach { apple ->
+            if (a + apple in s..t) { output[0]++ }
+        }
+
+        oranges.forEach { orange ->
+            if (b + orange in s..t) { output[1]++ }
+        }
+
+        println(output[0])
+        println(output[1])
+        assert(output[0] == 1)
+        assert(output[1] == 1)
+    }
+
+    /**
+     * kangaroo 1 starts at position x1, and jumps v1 spaces each jump.
+     * kangaroo 2 starts at position x2, and jumps v2 spaces each jump.
+     *
+     * Will they ever meet ?
+     */
+    @Test
+    fun kangaroo() {
+        val x1: Int = 123
+        val x2: Int = 4765
+        val v1: Int = 17
+        val v2: Int = 23
+
+        var output = "NO"
+        for (i in 1..10000) {
+            if (x1 + (i * v1) == x2 + (i * v2)) {
+                output = "YES"
+                break
+            }
+        }
+        println (output)
+    }
 }
